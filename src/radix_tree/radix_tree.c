@@ -174,7 +174,12 @@ _nxt:
 		if (cml==e->vl){
 			v+=e->vl;
 			ll++;
-			l=realloc(l,ll*sizeof(radix_tree_node_t*));
+			radix_tree_node_t** tmp=realloc(l,ll*sizeof(radix_tree_node_t*));
+			if (!tmp){
+				free(l);
+				return 0;
+			}
+			l=tmp;
 			*(l+ll-1)=e;
 			if (!(*v)){
 				while (ll){
